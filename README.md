@@ -2,7 +2,7 @@
 
 DokuRestAPI is a Python package that provides an easy-to-use interface for interacting with the DokuWiki web interface via its undocumented REST API. This package allows you to perform actions such as creating and deleting users, fetching user details, and managing other aspects of your DokuWiki instance programmatically.
 
-If you would like to see other things added create an issue! I've just been adding things as I need them.
+If you would like to see other things added [create an issue](https://github.com/krowvin/dokurestapi/issues)! I've just been adding things as I need them.
 
 ## Features
 
