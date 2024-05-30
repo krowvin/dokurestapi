@@ -38,8 +38,9 @@ load_dotenv()
 
 username = os.getenv("DOKUWIKI_USERNAME")
 password = os.getenv("DOKUWIKI_PASSWORD")
+domain = os.getenv("DOMAIN")
 
-with Login(username, password) as login_session:
+with Login(username, password, domain) as login_session:
     if login_session.is_logged_in():
         print("Logged in successfully!")
     else:
@@ -57,8 +58,9 @@ load_dotenv()
 
 username = os.getenv("DOKUWIKI_USERNAME")
 password = os.getenv("DOKUWIKI_PASSWORD")
+domain = os.getenv("DOMAIN")
 
-with Login(username, password) as login_session:
+with Login(username, password, domain) as login_session:
     if login_session.is_logged_in():
         users = Users(login_session.session)
         
@@ -84,7 +86,7 @@ with Login(username, password) as login_session:
 **Login**
 The Login class handles the login process and session management.
 
-* `Login(username, password)`: Initializes the login class with the given credentials.
+* `Login(username, password, domain)`: Initializes the login class with the given credentials.
 * `login(username=None, password=None)`: Logs in to DokuWiki. You can override the username and password.
 * `logout()`: Logs out from DokuWiki and allows you to login as another user in the same script run
 * `is_logged_in()`: Returns True if logged in, False otherwise.
