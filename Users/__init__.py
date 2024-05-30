@@ -52,6 +52,7 @@ class Users:
             context: The context containing session and other necessary information.
         """
         self.context = context
+        self.domain = context.domain
 
     def _det_payload(self, req, *args, **kwargs):
         """
