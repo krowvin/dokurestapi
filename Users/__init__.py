@@ -148,7 +148,7 @@ class Users:
         Raises:
             requests.exceptions.HTTPError: If the request fails.
         """
-        user_url = f"{self.DOMAIN}/doku.php?id=user:{username}"
+        user_url = f"{self.domain}/doku.php?id=user:{username}"
         response = self.context.session.get(user_url)
         response.raise_for_status()
         return response.text
@@ -163,7 +163,7 @@ class Users:
         Raises:
             requests.exceptions.HTTPError: If the request fails.
         """
-        users_url = f"{self.DOMAIN}/doku.php?id=start"
+        users_url = f"{self.domain}/doku.php?id=start"
         response = self.context.session.post(
             users_url,
             headers={
@@ -188,7 +188,7 @@ class Users:
             Exception: If the security token cannot be extracted.
         """
         response = self.context.session.get(
-            f"{self.DOMAIN}/doku.php?id=start&do=admin&page=usermanager"
+            f"{self.domain}/doku.php?id=start&do=admin&page=usermanager"
         )
         with open("sec_tok.html", "w") as f:
             f.write(response.text)
@@ -222,7 +222,7 @@ class Users:
         """
         print(f"\tCreating user {userid}...")
         response = self.context.session.post(
-            f"{self.DOMAIN}/wiki/doku.php?id=start&do=register",
+            f"{self.domain}/wiki/doku.php?id=start&do=register",
             data=self._det_payload(
                 req="add",
                 userid=userid,
@@ -263,7 +263,7 @@ class Users:
         """
         print(f"\tDeleting user {userid}...")
         response = self.context.session.post(
-            f"{self.DOMAIN}/doku.php?id=start",
+            f"{self.domain}/doku.php?id=start",
             data=self._det_payload(req="delete", userid=userid),
             headers={
                 "Cache-Control": "no-cache",
