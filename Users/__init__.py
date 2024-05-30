@@ -41,8 +41,6 @@ class Users:
         delete_user(self, userid):
             Deletes a user from the DokuWiki.
     """
-
-    ***REMOVED***
     STATUS_LIST = ["success", "error", "warning"]
     SEC_TOK_REGEX = r'<input type="hidden" name="sectok" value="([^"]+)" />'
 
