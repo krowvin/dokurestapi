@@ -23,6 +23,7 @@ First, make sure you have a .env file in your project directory with your DokuWi
 ```env
 DOKUWIKI_USERNAME=your_dokuwiki_username
 DOKUWIKI_PASSWORD=your_dokuwiki_password
+DOMAIN=https://path.toyourdoku.domain/andorsubdir
 ```
 
 ## Examples
