@@ -2,7 +2,7 @@
 
 REM Set the project name and version
 set PROJECT_NAME=dokurestapi
-set VERSION=0.1.2
+set VERSION=0.3.0
 
 REM Build the distribution package
 python setup.py sdist bdist_wheel
