@@ -71,6 +71,22 @@ class Users:
             payload.update(
                 {
                     "sectok": self._get_sec_tok(),
+                    "userid": kwargs.get("userid", ""),
+                    "userpass": kwargs.get("userpass", ""),
+                    "userpass2": kwargs.get("userpass2", ""),
+                    "username": kwargs.get("username"),
+                    "usermail": kwargs.get("email"),
+                    "usergroups": kwargs.get("groups"),
+                    "usernotify": "1" if kwargs.get("notify") else "0",
+                    "fullname": kwargs.get("username"),
+                    "email": kwargs.get("email"),
+                    "fn[add]": ""
+                }
+            )
+        elif req == "register":
+            payload.update(
+                {
+                    "sectok": self._get_sec_tok(),
                     "login": kwargs.get("userid"),
                     "fullname": kwargs.get("username"),
                     "email": kwargs.get("email"),
@@ -200,6 +216,55 @@ class Users:
             return SEC_TOK
         return False
 
+    def register_user(
+        self, userid, username, email, notify=True
+    ):
+        """
+        Registers a new user to the DokuWiki. As if they clicked the button to register - not an admin action but can be stopped by settings.
+        This will also email the admins upon registration
+
+        Args:
+            userid (str): The user ID.
+            username (str): The username.
+            password (str): The user's password.
+            email (str): The user's email.
+
+        Returns:
+            bool: True if the user is added successfully.
+
+        Raises:
+            requests.exceptions.HTTPError: If the request fails.
+            InvalidAuthorization: If the user lacks admin authorization.
+            Exception: If there is an error creating the user.
+        """
+        print(f"\tCreating user {userid}...")
+        response = self.context.session.post(
+            f"{self.domain}/wiki/doku.php?id=start&do=register",
+            data=self._det_payload(
+                req="register",
+                userid=userid,
+                username=username,
+                email=email,
+                notify=notify,
+            ),
+            headers={
+                "Cache-Control": "no-cache",
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+        )
+        response.raise_for_status()
+        with open("add.html", "w") as f:
+            f.write(response.text)
+        if self._parse_response(response.text, "error"):
+            self.error = response.text.split('<div class="error">')[1].split("</div>")[
+                0
+            ]
+            if self.error.find("admins only") >= 0:
+                raise InvalidAuthorization(f'You must have "admin" to create users.')
+            raise Exception(f"Error Creating User: {self.error}")
+        print(f"\tDone! User Created!")
+        return True
+
     def add_user(self, userid, username, password, email, notify=True, groups=["user"]):
         """
         Adds a new user to the DokuWiki.
@@ -221,6 +286,8 @@ class Users:
             Exception: If there is an error creating the user.
         """
         print(f"\tCreating user {userid}...")
+        # You must notify the user if you do not set a password
+        if not password: notify = True
         response = self.context.session.post(
             f"{self.domain}/wiki/doku.php?id=start&do=register",
             data=self._det_payload(

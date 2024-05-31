@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 version = os.environ.get("VERSION")
 if version is None:
-    raise ValueError("VERSION environment variable not set.")
+    raise ValueError("\n\nVERSION environment variable not set. You can set it with: \n\tset VERSION=#.#.#")
 
 setup(
     name="dokurestapi",
