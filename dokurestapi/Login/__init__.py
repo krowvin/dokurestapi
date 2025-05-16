@@ -4,7 +4,7 @@ class LoginException(Exception):
     pass
 
 class Login:
-    def __init__(self, username, password, domain):
+    def __init__(self, username, password, domain, verify=True):
         self.session = None
         self.username = username
         self.password = password
@@ -25,9 +25,9 @@ class Login:
                 "p": self.password,
             }
             self.session = requests.Session()
-            response = self.session.post(login_url, data=login_data, verify=False)
+            response = self.session.post(login_url, data=login_data, verify=verify)
             response.raise_for_status()
-            print("Login Successful!")
+            # print("Login Successful!")
             self.logged_in = True
             return self
         except Exception as e:
