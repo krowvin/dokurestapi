@@ -190,7 +190,8 @@ class Users:
         )
         response.raise_for_status()
         file_contents = response.content.decode("utf-8")
-        print(file_contents)
+
+        # TODO: this should be a dict like {"user":"foobar","realname":"Hans Muster","Email":"foo@domain.tld","groups":['generic','intern','user']} not a string which has to split manually
         return [u for u in file_contents.split("\n") if u]
 
     def _get_sec_tok(self):

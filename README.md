@@ -50,7 +50,8 @@ with Login(username, password, domain) as login_session:
 ```
 ### User Management
 ```python
-from dokurestapi import Login, Users
+from dokurestapi.Login import Login
+from dokurestapi.Users import Users
 
 # Load credentials from .env file
 import os
@@ -63,7 +64,7 @@ domain = os.getenv("DOMAIN")
 
 with Login(username, password, domain) as login_session:
     if login_session.is_logged_in():
-        users = Users(login_session.session)
+        users = Users(login_session)
         
         # Get all users
         all_users = users.get_users()
